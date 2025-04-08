@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class IgaguriController : MonoBehaviour
 {
+    FixedJoint fixedJoint;
+    bool isConnected = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +28,20 @@ public class IgaguriController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        GetComponent<Rigidbody>().isKinematic = true;
-        GetComponent<ParticleSystem>().Play();
+        if (!isConnected)
+        {
+            isConnected = true;
+
+            fixedJoint = gameObject.AddComponent<FixedJoint>();
+
+            //GetComponent<Rigidbody>().isKinematic = true;
+            GetComponent<ParticleSystem>().Play();
+            Invoke("setBreakForce", 1f);
+        }
+    }
+
+    public void setBreakForce()
+    {
+        fixedJoint.breakForce = 1000f;
     }
 }
