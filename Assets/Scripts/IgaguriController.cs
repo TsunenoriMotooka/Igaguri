@@ -12,7 +12,6 @@ public class IgaguriController : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        Shoot(new Vector3(0, 200, 2000));
     }
 
     // Update is called once per frame
